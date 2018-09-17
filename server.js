@@ -2,6 +2,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const users = require('./routes/api/users');
 const travel = require('./routes/api/travel');
@@ -9,6 +10,11 @@ const trips = require('./routes/api/trips');
 
 
 const app = express();
+
+// Body parser middleware
+// @desc  allows us to access req.body.<whatever> in our routes/api
+app.use(bodyParser.urlencoded({extended: false})); 
+app.use(bodyParser.json());
 
 // DB Config
 const db = require('./config/keys').mongoURI;
