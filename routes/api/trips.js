@@ -1,10 +1,238 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
+const passport = require('passport');
 
-// @route   GET api/posts/test
+// Load Validation
+const validateTripInput = require('../../validation/trip');
+const validateDestinationInput = require('../../validation/destination');
+const validateActivityInput = require('../../validation/activity');
+
+// Load Trip Model
+const Trip = require('../../models/Trip');
+// Load User Model
+const User = require('../../models/User');
+
+// @route   GET api/trips/test
 // @desc    Tests posts route
 // @access  Public
-router.get('/test', (req, res) => res.json({ msg: 'Posts Works' }));
+router.get('/test', (req, res) => res.json({ msg: 'Trips Works' }));
+
+// @route   GET api/trips/
+// @desc    Get current users trips
+// @access  Private
+router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => { // protected route with jwt token
+  const errors = {};
+
+  Trip.findOne({ user: req.user.id })
+    .then(trip => {
+      if (!trip) {
+        errors.notrips = 'There are no trips for this user';
+        return res.status(404).json(errors);
+      }
+      res.json(trip);
+    })
+    .catch(err => {
+      res.status(404).json(err);
+    })
+});
+
+// @route   GET api/trips/all
+// @desc    Get all trips
+// @access  Public
+router.get('/all', (req, res) => {
+  const errors = {};
+
+  Trip.find()
+    .then(trips => {
+      if(!trips) {
+        errors.notrips = 'There are no trips';
+        return res.status(404).json();
+      }
+      res.json(trips)
+    })
+    .catch(err => res.status(404).json({ trip: 'There are no trips' }));
+})
+
+// @route   GET api/trips/handle/:handle
+// @desc    Get trip by handle
+// @access  Public
+router.get('/handle/:handle', (req, res) => {
+  const errors = {};
+
+  Trip.findOne({ handle: req.params.handle })
+    .then(trip => {
+      if (!trip) {
+        errors.notrips = 'There are no trips for this user';
+        res.status(404).json(errors);
+      }
+
+      res.json(trip);
+    })
+    .catch(err => res.status(404).json(err));
+});
+
+// @route   GET api/trips/user/:user_id
+// @desc    Get trip by user ID
+// @access  Public
+router.get('/user/:user_id', (req, res) => {
+  const errors = {};
+
+  Trip.findOne({ user: req.params.user_id })
+    .then(trip => {
+      if (!trip) {
+        errors.notrips = 'There are no trips for this user';
+        res.status(404).json(errors);
+      }
+
+      res.json(trip);
+    })
+    .catch(err => res.status(404).json({ trip: 'There are no trips for this user' }));
+});
+
+// @route   POST api/trips/
+// @desc    Create or edit user trips
+// @access  Private
+router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => { // protected route with jwt token
+  const { errors, isValid } = validateTripInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    // Return any errors with 400 status
+    return res.status(400).json(errors);
+  } 
+
+  // Get fields
+  const tripFields = {};
+  tripFields.user = req.user.id;
+
+  if (req.body.handle) tripFields.handle = req.body.handle; 
+
+  Trip.findOne({ user: req.user.id })
+    .then(trip => {
+      if (trip) {
+        // Update
+        Trip.findOneAndUpdate(
+          { user: req.user.id }, 
+          { $set: tripFields }, 
+          { new: true })
+        .then(trip => res.json(trip));
+      } else {
+        // Create
+
+        // Check if handle exists
+        Trip.findOne({ handle: tripFields.handle })
+          .then(trip => {
+            if (trip) {
+              errors.handle = 'That handle already exists';
+              res.status(400).json(errors);
+            }
+
+            // Save Trip
+            new Trip(tripFields)
+              .save()
+              .then(trip => {
+              res.json(trip);
+            });
+          });
+      }
+    })
+})
+
+// @route   POST api/trips/destination
+// @desc    Add destination to trip
+// @access  Private
+router.post('/destination', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const { errors, isValid } = validateDestinationInput(req.body);
+
+  // Check Validation
+  if (!isValid) {
+    // Return any errors with 400 status
+    return res.status(400).json(errors);
+  } 
+
+  Trip.findOne({ user: req.user.id })
+    .then(trip => {
+      const newDest = {
+        location: req.body.location,
+        dateFrom: req.body.dateFrom,
+        dateTo: req.body.dateTo,
+        totalBudget: req.body.totalBudget,
+        note: req.body.note
+
+        // nested array of objects inside an array of object
+        // activity: req.body.activity,
+        // name: req.body.activity.name,
+        // timeFrom: req.body.activity.timeFrom,
+        // timeTo: req.body.activity.timeTo,
+        // cost: req.body.activity.cost
+      }
+
+      // Add to dest array
+      trip.destination.unshift(newDest);
+
+      trip.save().then(trip => res.json(trip))
+    })
+});
+
+// @route   POST api/trips/activity
+// @desc    Add activity to trip
+// @access  Private
+// router.post('/activity', passport.authenticate('jwt', { session: false }), (req, res) => {
+//   const { errors, isValid } = validateActivityInput(req.body);
+
+//   // Check Validation
+//   if (!isValid) {
+//     // Return any errors with 400 status
+//     return res.status(400).json(errors);
+//   }
+
+//   Trip.findOne({ user: req.user.id })
+//     .then(trip => {
+//       const newAct = {
+//         name: req.body.name,
+//         timeFrom: req.body.timeFrom,
+//         timeTo: req.body.timeTo,
+//         cost: req.body.cost
+//       }
+
+//       // Add to dest array
+//       trip.activity.unshift(newAct);
+
+//       trip.save().then(trip => res.json(trip))
+//     })
+// });
+
+// @route   DELETE api/trips/destination
+// @desc    Delete destination from trip
+// @access  Private
+router.delete('/destination/:dest_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  Trip.findOne({ user: req.user.id })
+    .then(trip => {
+      // Get remove index
+      const removeIndex = trip.destination.map(item => item.id).indexOf(req.params.dest_id);
+      
+      // Splice out of array
+      trip.destination.splice(removeIndex, 1);
+
+      // Save
+      trip.save().then(trip => res.json(trip));
+    })
+    .catch(err => res.status(404).json(err));
+});
+
+// @route   DELETE api/trips
+// @desc    Delete user and all trips
+// @access  Private
+router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) => {
+
+  Trip.findOneAndRemove({ user: req.user.id })
+    .then(() => {
+      User.findOneAndRemove({ _id: req.user.id })
+        .then(() => res.json({ success: true }))
+    })
+});
 
 module.exports = router;
