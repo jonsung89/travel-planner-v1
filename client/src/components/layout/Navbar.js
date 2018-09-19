@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
+import { Link } from 'react-router-dom'
 
-class Navbar extends Component {
+class NavBar extends Component {
   constructor(props) {
     super(props);
 
@@ -19,24 +20,22 @@ class Navbar extends Component {
   
   render() {
     return (
-      <div>
-        <Navbar color="faded" light>
-          <NavbarBrand href="/" className="mr-auto">reactstrap</NavbarBrand>
+        <Navbar className="navbar navbar-dark bg-dark" color="faded" light>
+          <Link to="/" className="navbar-brand mr-auto">Travel Planner</Link>
           <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
               <NavItem>
-                <NavLink href="/components/">Components</NavLink>
+                <NavLink href="/about">About</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                <NavLink href="https://github.com/jonsung89/travel-planner-v1/tree/master">GitHub Repo</NavLink>
               </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
-      </div>
     )
   }
 }
 
-export default Navbar
+export default NavBar

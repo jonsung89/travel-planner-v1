@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -13,7 +13,12 @@ const TripSchema = new Schema({
     required: true,
     max: 40
   },
+  // plural
   destination: [{
+    trip: {
+      type: Schema.Types.ObjectId,
+      refPath: 'trips'
+    },
     location: {
       type: String,
       required: true
@@ -25,34 +30,44 @@ const TripSchema = new Schema({
     dateTo: {
       type: Date, 
       required: true
-    }, 
-    activity: [{
+    },
+    totalBudget: {
+      type: Number
+    },
+    // totalCost - maybe
+    note: {
+      type: String
+    },
+    activities: [{
+      location: {
+        type: Schema.Types.ObjectId,
+        refPath: 'destination'
+      },
       name: {
         type: String,
         // required: true
+      },
+      dateFrom: {
+        type: Date
+      },
+      dateTo: {
+        type: Date
       },
       timeFrom: {
         type: String
       },
       timeTo: {
         type: String
-      }, 
+      },
       cost: {
         type: Number,
         default: 0
-      }, 
+      },
       note: {
         type: String
       }
     }],
-    totalBudget: {
-      type: Number
-    },
-    note: {
-      type: String
-    }
-    // totalCost - maybe
-  }]
+  }],
 });
 
 const Trip = mongoose.model('trips', TripSchema);

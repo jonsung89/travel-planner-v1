@@ -29,10 +29,10 @@ router.post('/register', (req, res) => {
     return res.status(400).json(errors);
   }
 
-  User.findOne({ email: req.body.email }) // look for an email that matches
+  User.findOne({ username: req.body.username }) // look for a username that matches
     .then(user => {
       if(user) {
-        errors.email = 'Email already exists'
+        errors.username = 'Username already exists';
         return res.status(400).json(errors);
       } else {
         const newUser = new User({
@@ -48,10 +48,10 @@ router.post('/register', (req, res) => {
             newUser.save()
               .then(user => res.json(user))
               .catch(err => console.error(err));
-          })
-        })
+          });
+        });
       }
-    })
+    });
 });
 
 // @route   GET api/users/login
@@ -79,27 +79,27 @@ router.post('/login', (req, res) => {
 
       // Check Password
       bcrypt.compare(password, user.password)
-      .then(isMatch => {
-        if(isMatch) {
+        .then(isMatch => {
+          if(isMatch) {
           // User Matched
           // res.json({ msg: 'Success' });
           
-          const payload = { id: user.id, username: user.username, email: user.email } // Create JWT Payload
+            const payload = { id: user.id, username: user.username, email: user.email }; // Create JWT Payload
 
-          // Sign Token
-          jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) => {
-            res.json({
-              success: true,
-              token: 'Bearer ' + token
-            });
-          }); // One hour expiration
-        } else {
-          errors.password = 'Password incorrect';
-          return res.status(400).json(errors);
-        }
-      })
+            // Sign Token
+            jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) => {
+              res.json({
+                success: true,
+                token: 'Bearer ' + token
+              });
+            }); // One hour expiration
+          } else {
+            errors.password = 'Password incorrect';
+            return res.status(400).json(errors);
+          }
+        });
     });
-})
+});
 
 // @route   GET api/users/current
 // @desc    Return current user - test purpose
