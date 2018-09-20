@@ -1,6 +1,11 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Collapse, Navbar, NavbarToggler, Nav, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { logoutUser } from '../../actions/authActions';
+import { withRouter } from 'react-router-dom';
+
 
 class NavBar extends Component {
   constructor(props) {
@@ -17,8 +22,24 @@ class NavBar extends Component {
       collapsed: !this.state.collapsed
     });
   }
+
+  onLogoutClick(e) {
+    e.preventDefault();
+    this.props.logoutUser(this.props.history);
+    this.setState({
+      collapsed: !this.state.collapsed
+    });
+  }
   
   render() {
+    const { isAuthenticated } = this.props.auth;
+
+    const authLink = (
+      <NavItem>
+        <NavLink href="#" onClick={this.onLogoutClick.bind(this)}>Log Out</NavLink>
+      </NavItem>
+    );
+
     return (
         <Navbar className="navbar navbar-dark bg-dark" color="faded" light>
           <Link to="/" className="navbar-brand mr-auto">Travel Planner</Link>
@@ -26,11 +47,12 @@ class NavBar extends Component {
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
               <NavItem>
-                <NavLink href="/about">About</NavLink>
+                <NavLink href="/about" target="_blank">About</NavLink>
               </NavItem>
               <NavItem>
-                <NavLink href="https://github.com/jonsung89/travel-planner-v1/tree/master">GitHub Repo</NavLink>
+                <NavLink href="https://github.com/jonsung89/travel-planner-v1/tree/master" target="_blank">GitHub Repo</NavLink>
               </NavItem>
+              {isAuthenticated ? authLink : null}
             </Nav>
           </Collapse>
         </Navbar>
@@ -38,4 +60,13 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar
+NavBar.propTypes = {
+  logoutUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired
+}
+
+const mapStateToProps = state => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps, { logoutUser })(withRouter(NavBar));

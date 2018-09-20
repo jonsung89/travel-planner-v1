@@ -198,7 +198,7 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 
 
 
-// @route   POST api/trips/destination
+// @route   POST api/trips/destination/:trip_id
 // @desc    Add destination to trip
 // @access  Private
 router.post('/destination/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
@@ -208,9 +208,9 @@ router.post('/destination/:id', passport.authenticate('jwt', { session: false })
   if (!isValid) {
     // Return any errors with 400 status
     return res.status(400).json(errors);
-  } 
+  }
 
-  Trip.findOne({ user: req.user.id })
+  Trip.findOne({ user: req.user.id, _id: req.params.id })
     .then(trip => {
       const newDest = {
         location: req.body.location,
@@ -232,24 +232,32 @@ router.post('/destination/:id', passport.authenticate('jwt', { session: false })
 
 
 
-// @route   DELETE api/trips/destination/:dest_id
-// @desc    Delete destination from trip
+// @route   DELETE api/trips/destination/:id/:destId
+// @desc    Delete specified destination from trips
 // @access  Private
-router.delete('/destination/:dest_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.delete('/destination/:id/:destId', passport.authenticate('jwt', { session: false }), (req, res) => {
 
-  Trip.findOne({ user: req.user.id })
+  Trip.findOne({ user: req.user.id, _id: req.params.id })
     .then(trip => {
       // Get remove index
-      const removeIndex = trip.destination.map(item => item.id).indexOf(req.params.dest_id);
-      
+      const removeIndex = trip.destination.map(item => item.id).indexOf(req.params.destId);
       // Splice out of array
       trip.destination.splice(removeIndex, 1);
 
       // Save
-      trip.save().then(trip => res.json(trip));
+      trip.save().then(trip => {
+        console.log(req.params.destId)
+        res.json(trip)
+      });
     })
     .catch(err => res.status(404).json(err));
 });
+
+
+
+
+
+
 
 // @route   DELETE api/trips
 // @desc    Delete user and all trips
