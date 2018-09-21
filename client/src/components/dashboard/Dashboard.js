@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getCurrentTrip } from '../../actions/tripActions'
 import Spinner from '../common/Spinner';
-// import DisplayTrip from '../display-trip/DisplayTrip';
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -25,16 +24,19 @@ class Dashboard extends Component {
     } else {
       if (Object.keys(trip).length > 0) {
         
-        console.log(trip);
-        console.log(trip[0]);
+        // console.log(trip);
+        // console.log(trip[0]);
         
         const trips = trip.map((item) => {
           return <div className="col-sm-6 mb-6" key={item._id}>
-              <div className="card text-white bg-dark mb-4">
+              <div className="card text-dark bg-white border-dark  mb-4">
                 <div className="card-body">
                   <h5 className="card-title">{item.handle}</h5>
-                  <Link to={"/create-plans/" + item._id} className="btn btn-info">
-                    Plans
+                  <Link to={"/display-plans/" + item._id} className="btn btn-dark mr-2 mt-2">
+                    Display Plans
+                  </Link>
+                  <Link to={"/create-plans/" + item._id} className="btn btn-info mr-2 mt-2">
+                    Make Plans
                   </Link>
                 </div>
               </div>

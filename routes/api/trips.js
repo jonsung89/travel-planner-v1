@@ -145,54 +145,29 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
     });
 });
 
-// // @route   POST api/trips/
-// // @desc    Create user trips - only allows one trip to be created or else it gets updated with new values
-// // @access  Private
-// router.post('/', passport.authenticate('jwt', { session: false }), (req, res) => { // protected route with jwt token
-//   const { errors, isValid } = validateTripInput(req.body);
 
-//   // Check Validation
-//   if (!isValid) {
-//     // Return any errors with 400 status
-//     return res.status(400).json(errors);
-//   } 
-//   // Get fields
-//   const tripFields = {};
-//   tripFields.user = req.user.id;
 
-//   if (req.body.handle) tripFields.handle = req.body.handle; 
 
-//   Trip.findOne({ user: req.user.id })
-//     .then(trip => {
-//       if (trip) {
-//         // Update
-//         Trip.findOneAndUpdate(
-//           { user: req.user.id }, 
-//           { $set: tripFields }, 
-//           { new: true })
-//           .then(trip => res.json(trip));
-//       } else {
-//         // Create
 
-//         // Check if handle exists
-//         Trip.findOne({ handle: tripFields.handle })
-//           .then(trip => {
-//             if (trip) {
-//               errors.handle = 'That handle already exists';
-//               res.status(400).json(errors);
-//             }
 
-//             // Save Trip
-//             new Trip(tripFields)
-//               .save()
-//               .then(trip => {
-//                 res.json(trip);
-//               });
-//           });
-//       }
-//     });
-// });
+// @route   GET api/trips/destination/:trip_id
+// @desc    Add destination to trip
+// @access  Private
+router.get('/destination/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  const errors = {};
 
+  Trip.findOne({ user: req.user.id, _id: req.params.id })
+    .then(trip => {
+      if (!trip) {
+        errors.notrips = 'There are no trips for this user';
+        return res.status(404).json(errors);
+      }
+      res.json(trip);
+    })
+    .catch(err => {
+      res.status(404).json(err);
+    });
+});
 
 
 
@@ -221,7 +196,7 @@ router.post('/destination/:id', passport.authenticate('jwt', { session: false })
       };
 
       // Add to dest array
-      trip.destination.unshift(newDest);
+      trip.destination.push(newDest);
 
       trip.save().then(trip => res.json(trip));
     });

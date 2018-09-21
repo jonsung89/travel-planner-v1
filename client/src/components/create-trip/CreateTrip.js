@@ -48,7 +48,7 @@ class CreateTrip extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
-              <h1 className="display-4 text-center">Create Your Trip</h1>
+              <h2 className="display-4 text-center">Create Your Trip</h2>
               <p className="lead text-center">Let's get some information to create your trip!</p>
               <small className="d-block pb-3">* = required fields</small>
               <form onSubmit={this.onSubmit}>

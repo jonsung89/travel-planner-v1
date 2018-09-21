@@ -1,22 +1,65 @@
 import React, { Component } from 'react'
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { withRouter, Redirect } from "react-router-dom";
+import { withRouter, Redirect, Link } from "react-router-dom";
 // import { getCurrentTrip } from "../../actions/tripActions";
 import { getSelectedTrip } from "../../actions/tripActions";
+import { addDestination } from "../../actions/tripActions";
 
 import TextFieldGroup from "../common/TextFieldGroup";
+import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
 
 class CreatePlans extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      // trip: '',
+      location: '',
+      dateFrom: '',
+      dateTo: '',
+      totalBudget: '',
+      note: '',
+      errors: {}
+    }
+  }
+
   componentDidMount() {
     this.props.getSelectedTrip();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.errors) {
+      this.setState({ 
+        errors: nextProps.errors
+      })
+    }
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    console.log('Submitted');
+    const destData = {
+      location: this.state.location,
+      dateFrom: this.state.dateFrom,
+      dateTo: this.state.dateTo,
+      totalBudget: this.state.totalBudget,
+      note: this.state.note
+    };
+    const id = this.props.match.params.tripHandle;
+    this.props.addDestination(id, destData, this.props.history);
+  }
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
   }
 
   render() {
     const { trip } = this.props.trip;
     // console.log("these are the trips: ", trip);
 
-    const { errors } = this.props.errors;
+    const { errors } = this.state;
 
     let createPlansHeader;
 
@@ -24,21 +67,18 @@ class CreatePlans extends Component {
       return <Redirect to='/dashboard' />;
     } else {
       const tripId = this.props.match.params.tripHandle;
-      // console.log("this is the _id of this trip: ", tripId);
+      console.log("this is the _id of this trip: ", tripId);
 
       // const specificTrip = trip.filter(item => { return item._id === tripId });
-      // console.log(specificTrip);
-      // console.log(specificTrip.handle)
+
       const specificTrip = trip.findIndex(item => item._id === tripId)
-      // console.log(specificTrip); // index of the object in the array
-      
-      // console.log(trip[specificTrip].handle);
+      // console.log(specificTrip); // index of the object in the array      
 
       createPlansHeader = (
         <div>
-          <h1 className="display-4 text-center">Create Plans for {trip[specificTrip].handle}</h1>
+          <h2 className="display-4 text-center">Create Plans for {trip[specificTrip].handle}</h2>
           <p className="lead text-center">
-                Let's get some information to create your trip!
+                Let's get some information to create plans for your trip!
           </p>
           <small className="d-block pb-3">* = required fields</small>
         </div>
@@ -47,10 +87,54 @@ class CreatePlans extends Component {
 
     return <div className="create-trip">
         <div className="container">
+          <Link to ="/dashboard" className="btn btn-secondary mb-3">Go Back</Link>
           <div className="row">
             <div className="col-md-8 m-auto">
               {createPlansHeader}
-              <form>
+              <form onSubmit={this.onSubmit}>
+                <div className="form-group">
+                  <TextFieldGroup
+                  placeholder="* Location"
+                  name="location"
+                  value={this.state.location}
+                  onChange={this.onChange}
+                  error={errors.location}
+                  />
+                  <h6>From Date</h6>
+                  <TextFieldGroup
+                    placeholder="* mm/dd/yyyy"
+                    type="date"
+                    name="dateFrom"
+                    value={this.state.dateFrom}
+                    onChange={this.onChange}
+                    error={errors.dateFrom}
+                  />
+                  <h6>To Date</h6>
+                  <TextFieldGroup
+                    type="date"
+                    placeholder="* mm/dd/yyyy"
+                    name="dateTo"
+                    value={this.state.dateTo}
+                    onChange={this.onChange}
+                    error={errors.dateTo}
+                  />
+                  <TextFieldGroup
+                    type="number"
+                    placeholder="Total Budget"
+                    name="totalBudget"
+                    value={this.state.totalBudget}
+                    onChange={this.onChange}
+                    // error={errors.dateTo}
+                  />
+                  <TextAreaFieldGroup 
+                    placeholder="Notes"
+                    name="note"
+                    value={this.state.note}
+                    onChange={this.onChange}
+                    error={errors.note}
+                  />
+                  </div>
+
                 <div className="mb-3">
                   <input type="submit" value="submit" className="btn btn-info btn-block mt-4" />
                 </div>
@@ -63,6 +147,8 @@ class CreatePlans extends Component {
 }
 
 CreatePlans.propTypes = {
+  addDestination: PropTypes.func.isRequired,
+  getSelectedTrip: PropTypes.func.isRequired,
   trip: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
 };
@@ -74,5 +160,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { getSelectedTrip }
+  { getSelectedTrip, addDestination }
 )(withRouter(CreatePlans));

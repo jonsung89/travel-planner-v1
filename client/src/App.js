@@ -18,6 +18,7 @@ import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateTrip from './components/create-trip/CreateTrip';
 import CreatePlans from './components/create-plans/CreatePlans';
+import DisplayPlans from './components/display-trip/DisplayPlans';
 
 import './App.css';
 
@@ -62,6 +63,9 @@ class App extends Component {
                 </Switch>
                 <Switch>
                   <PrivateRoute exact path="/create-plans/:tripHandle" component={CreatePlans} />
+                </Switch>
+                <Switch>
+                  <PrivateRoute exact path="/display-plans/:tripHandle" component={DisplayPlans} />
                 </Switch>
               </div>
             <Footer />
