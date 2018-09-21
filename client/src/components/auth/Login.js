@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import classnames from 'classnames';
 import { loginUser } from '../../actions/authActions';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 class Login extends Component {
   constructor() {
@@ -59,14 +59,21 @@ class Login extends Component {
               <h1 className="display-4 text-center">Log In</h1>
               <p className="lead text-center">Sign into your Travel Planner account!</p>
               <form onSubmit={this.onSubmit}>
-                <div className="form-group">
-                  <input type="text" className={classnames('form-control form-control-lg', {'is-invalid': errors.username})} placeholder="Username" name="username" value={this.state.username} onChange={this.onChange}/>
-                  {errors.username && (<div className="invalid-feedback">{errors.username}</div>)}
-                </div>
-                <div className="form-group">
-                  <input type="password" className={classnames('form-control form-control-lg', {'is-invalid': errors.password})} placeholder="Password" name="password" value={this.state.password} onChange={this.onChange}/>
-                  {errors.password && (<div className="invalid-feedback">{errors.password}</div>)}
-                </div>
+                <TextFieldGroup 
+                  placeholder="Username"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.onChange}
+                  error={errors.username}
+                />
+                <TextFieldGroup
+                  placeholder="Password"
+                  name="password"
+                  type="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  error={errors.password}
+                />
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>

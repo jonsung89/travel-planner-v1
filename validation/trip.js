@@ -9,14 +9,14 @@ module.exports = function validateTripInput(data) {
   data.password = !isEmpty(data.password) ? data.password : '';
 
   if (!Validator.isLength(data.handle, { min: 2, max: 40 })) {
-    errors.handle = 'Handle needs to between 2 and 40 characters'
+    errors.handle = 'Trip name needs to between 1 and 40 characters';
   }
   if (Validator.isEmpty(data.handle)) {
-    errors.handle = 'Trip handle is required';
+    errors.handle = 'Trip name is required';
   }
 
   return {
     errors,
     isValid: isEmpty(errors)
-  }
-}
+  };
+};
