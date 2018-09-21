@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withRouter, Redirect, Link } from 'react-router-dom'; // for when we need to delete a handle
-
+import Moment from 'react-moment';
 import { getSelectedTrip } from "../../actions/tripActions";
 
 class DisplayPlans extends Component {
@@ -24,15 +24,37 @@ class DisplayPlans extends Component {
       const specificTrip = trip.findIndex(item => item._id === tripId)
       // console.log(specificTrip); // index of the object in the array      
 
-      // const dest = trip[specificTrip].destination.()
+      const dests = trip[specificTrip].destination;
+      const displayLocations = dests.map(item => {
+        // location: item.location
+        return <div className="card w-50 border-dark m-auto pb-6" key={item._id}>
+            <div className="card-header text-white bg-dark">
+              <Moment format="MM/DD/YYYY">{item.dateTo}</Moment> - <Moment format="MM/DD/YYYY">
+                {item.dateFrom}
+              </Moment>
+            </div>
+            <div className="card-body text-dark">
+              <h5 className="card-title">{item.location}</h5>
+              <p className="card-text">{item.note}</p>
+              <div className="input-group-prepend">
+                <span className="input-group-text">
+                  Total Budget: $ {item.totalBudget}
+                </span>
+              </div>
+            </div>
+          </div>;
+      })
+      
+      console.log('this is the list of destinations: ', dests);
+      // console.log('this is the list of all the locations: ', dest);
 
-      displayPlansHeader = <div>
+      displayPlansHeader = <div className="col-md-12">
           <h2 className="display-4 text-center">
             Plans for {trip[specificTrip].handle}
           </h2>
-          <p className="lead text-center">
-            text text text
-          </p>
+          <div className="container pt-4">
+            {displayLocations}
+          </div>
         </div>;
     }
     
@@ -40,7 +62,11 @@ class DisplayPlans extends Component {
     return <div className="display-plans">
         <div className="container">
           <Link to="/dashboard" className="btn btn-secondary mb-3">Go Back</Link>
-          {displayPlansHeader}
+          <div className="row">
+ 
+            {displayPlansHeader}
+
+          </div>
         </div>
       </div>;
   }
