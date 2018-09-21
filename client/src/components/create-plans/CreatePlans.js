@@ -93,6 +93,7 @@ class CreatePlans extends Component {
               {createPlansHeader}
               <form onSubmit={this.onSubmit}>
                 <div className="form-group">
+                <label htmlFor="input-location">Location</label>
                   <TextFieldGroup
                   placeholder="* Location"
                   name="location"
@@ -100,7 +101,7 @@ class CreatePlans extends Component {
                   onChange={this.onChange}
                   error={errors.location}
                   />
-                  <h6>From Date</h6>
+                <label htmlFor="input-from-date">From Date</label>
                   <TextFieldGroup
                     placeholder="* mm/dd/yyyy"
                     type="date"
@@ -109,7 +110,7 @@ class CreatePlans extends Component {
                     onChange={this.onChange}
                     error={errors.dateFrom}
                   />
-                  <h6>To Date</h6>
+                <label htmlFor="input-to-date">To Date</label>
                   <TextFieldGroup
                     type="date"
                     placeholder="* mm/dd/yyyy"
@@ -118,6 +119,7 @@ class CreatePlans extends Component {
                     onChange={this.onChange}
                     error={errors.dateTo}
                   />
+                <label htmlFor="input-total-budget">Total Budget</label>
                   <TextFieldGroup
                     type="number"
                     placeholder="Total Budget"
@@ -126,6 +128,7 @@ class CreatePlans extends Component {
                     onChange={this.onChange}
                     // error={errors.dateTo}
                   />
+                <label htmlFor="input-notes">Notes</label>
                   <TextAreaFieldGroup 
                     placeholder="Notes"
                     name="note"

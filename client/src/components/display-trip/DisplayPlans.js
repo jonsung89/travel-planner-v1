@@ -19,12 +19,12 @@ class DisplayPlans extends Component {
       return <Redirect to='/dashboard' />;
     } else {
       const tripId = this.props.match.params.tripHandle;
-      console.log("this is the _id of this trip: ", tripId);
-
+      // console.log("this is the _id of this trip: ", tripId);
       // const specificTrip = trip.filter(item => { return item._id === tripId });
-
       const specificTrip = trip.findIndex(item => item._id === tripId)
       // console.log(specificTrip); // index of the object in the array      
+
+      // const dest = trip[specificTrip].destination.()
 
       displayPlansHeader = <div>
           <h2 className="display-4 text-center">

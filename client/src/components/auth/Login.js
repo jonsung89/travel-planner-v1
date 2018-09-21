@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Link } from "react-router-dom";
 import { loginUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 
@@ -51,36 +52,28 @@ class Login extends Component {
   render() {
     const { errors } = this.state;
 
-    return (
-      <div className="login">
+    return <div className="login">
         <div className="container">
+          <Link to="/" className="btn btn-secondary mb-3">
+            Go Back
+          </Link>
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Log In</h1>
-              <p className="lead text-center">Sign into your Travel Planner account!</p>
+              <p className="lead text-center">
+                Sign into your Travel Planner account!
+              </p>
               <form onSubmit={this.onSubmit}>
-                <TextFieldGroup 
-                  placeholder="Username"
-                  name="username"
-                  value={this.state.username}
-                  onChange={this.onChange}
-                  error={errors.username}
-                />
-                <TextFieldGroup
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  error={errors.password}
-                />
+                <label htmlFor="input-username">Username</label>
+                <TextFieldGroup placeholder="Username" name="username" value={this.state.username} onChange={this.onChange} error={errors.username} />
+                <label htmlFor="input-password">Password</label>
+                <TextFieldGroup placeholder="Password" name="password" type="password" value={this.state.password} onChange={this.onChange} error={errors.password} />
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
             </div>
           </div>
         </div>
-      </div>
-    )
+      </div>;
   }
 }
 

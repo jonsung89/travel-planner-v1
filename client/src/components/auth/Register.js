@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions'
 import TextFieldGroup from '../common/TextFieldGroup';
@@ -55,6 +55,9 @@ class Register extends Component {
     return <div className="register">
         {/* {user ? user.username : null} */}
         <div className="container">
+          <Link to="/" className="btn btn-secondary mb-3">
+            Go Back
+          </Link>
           <div className="row">
             <div className="col-md-8 m-auto">
               <h1 className="display-4 text-center">Sign Up</h1>
@@ -62,40 +65,14 @@ class Register extends Component {
                 Create your Travel Planner account!
               </p>
               <form onSubmit={this.onSubmit}>
-              
-                <TextFieldGroup 
-                  placeholder="Username" 
-                  name="username" 
-                  value={this.state.username} 
-                  onChange={this.onChange} 
-                  error={errors.username} />
-
-                <TextFieldGroup
-                  placeholder="Email"
-                  name="email"
-                  type="email"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                  error={errors.email}
-                />
-
-                <TextFieldGroup
-                  placeholder="Password"
-                  name="password"
-                  type="password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                  error={errors.password}
-                />
-
-                <TextFieldGroup
-                  placeholder="Confirm Password"
-                  name="password2"
-                  type="password"
-                  value={this.state.password2}
-                  onChange={this.onChange}
-                  error={errors.password2}
-                />
+              <label htmlFor="input-username">Username</label>
+                <TextFieldGroup placeholder="Username" name="username" value={this.state.username} onChange={this.onChange} error={errors.username} />
+              <label htmlFor="input-email">Email</label>
+                <TextFieldGroup placeholder="Email" name="email" type="email" value={this.state.email} onChange={this.onChange} error={errors.email} />
+              <label htmlFor="input-password">Password</label>
+                <TextFieldGroup placeholder="Password" name="password" type="password" value={this.state.password} onChange={this.onChange} error={errors.password} />
+              <label htmlFor="input-password2">Confirm Password</label>
+                <TextFieldGroup placeholder="Confirm Password" name="password2" type="password" value={this.state.password2} onChange={this.onChange} error={errors.password2} />
 
                 <input type="submit" className="btn btn-info btn-block mt-4" />
               </form>
