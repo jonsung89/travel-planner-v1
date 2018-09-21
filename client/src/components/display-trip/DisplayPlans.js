@@ -27,19 +27,19 @@ class DisplayPlans extends Component {
       const dests = trip[specificTrip].destination;
       const displayLocations = dests.map(item => {
         // location: item.location
-        return <div className="card w-50 border-dark m-auto pb-6" key={item._id}>
-            <div className="card-header text-white bg-dark">
-              <Moment format="MM/DD/YYYY">{item.dateTo}</Moment> - <Moment format="MM/DD/YYYY">
-                {item.dateFrom}
-              </Moment>
-            </div>
-            <div className="card-body text-dark">
-              <h5 className="card-title">{item.location}</h5>
-              <p className="card-text">{item.note}</p>
-              <div className="input-group-prepend">
-                <span className="input-group-text">
+        return <div className="col-md-6 mb-6" key={item._id}>
+            <div className="card border-dark mb-4">
+              <div className="card-header text-white bg-dark">
+                <Moment format="MM/DD/YYYY">{item.dateTo}</Moment> - <Moment format="MM/DD/YYYY">
+                  {item.dateFrom}
+                </Moment>
+              </div>
+              <div className="card-body text-dark">
+                <h5 className="card-title">{item.location}</h5>
+                <p className="card-text">{item.note}</p>
+                <button className="btn btn-info">
                   Total Budget: $ {item.totalBudget}
-                </span>
+                </button>
               </div>
             </div>
           </div>;
@@ -48,13 +48,11 @@ class DisplayPlans extends Component {
       console.log('this is the list of destinations: ', dests);
       // console.log('this is the list of all the locations: ', dest);
 
-      displayPlansHeader = <div className="col-md-12">
-          <h2 className="display-4 text-center">
+      displayPlansHeader = <div className="display-content">
+          <h2 className="display-4 text-center mb-4">
             Plans for {trip[specificTrip].handle}
           </h2>
-          <div className="container pt-4">
             {displayLocations}
-          </div>
         </div>;
     }
     
@@ -63,8 +61,9 @@ class DisplayPlans extends Component {
         <div className="container">
           <Link to="/dashboard" className="btn btn-secondary mb-3">Go Back</Link>
           <div className="row">
- 
-            {displayPlansHeader}
+            <div className="col-md-12">
+              {displayPlansHeader}          
+            </div>
 
           </div>
         </div>
