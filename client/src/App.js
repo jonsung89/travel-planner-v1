@@ -36,7 +36,7 @@ if (localStorage.jwtToken) {
   if (decoded.exp < currentTime) {
     // Logout user
     let logoutUser = store.dispatch.logoutUser;
-    store.dispatch(logoutUser());
+    store.dispatch(logoutUser);
     // Clear current trips
     store.dispatch(clearCurrentTrip());
     // Redirect to login
