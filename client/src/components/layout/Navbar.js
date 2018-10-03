@@ -27,7 +27,7 @@ class NavBar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
     this.props.clearCurrentTrip();
-    this.props.logoutUser(this.props.history);
+    this.props.logoutUser();
     this.setState({
       collapsed: !this.state.collapsed
     });
