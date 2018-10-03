@@ -35,7 +35,7 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     // Logout user
-    let logoutUser = store.dispatch.logoutUser;
+    let logoutUser = store.dispatch.logoutUser();
     store.dispatch(logoutUser);
     // Clear current trips
     store.dispatch(clearCurrentTrip());
