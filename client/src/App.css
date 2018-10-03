@@ -43,3 +43,7 @@ img {
   color: #34495E;
   border: none;
 }
+
+.btn-info:hover {
+  background-color: #34495E;
+}
