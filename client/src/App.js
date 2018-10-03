@@ -4,6 +4,7 @@ import jwt_decode from 'jwt-decode';
 import setAuthToken from './utils/setAuthToken';
 import { setCurrentUser } from './actions/authActions';
 import { clearCurrentTrip } from './actions/tripActions';
+import { logoutUser } from './actions/authActions';
 
 import { Provider } from 'react-redux';
 import store from './store';
@@ -35,7 +36,7 @@ if (localStorage.jwtToken) {
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     // Logout user
-    let logoutUser = store.dispatch.logoutUser();
+    // let logoutUser = store.dispatch.logoutUser();
     store.dispatch(logoutUser());
     // Clear current trips
     store.dispatch(clearCurrentTrip());
