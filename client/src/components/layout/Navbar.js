@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { logoutUser } from '../../actions/authActions';
-// import { withRouter } from 'react-router-dom';
 import { clearCurrentTrip } from '../../actions/tripActions';
 
 
@@ -45,7 +44,7 @@ class NavBar extends Component {
     return (
         <Navbar className="navbar navbar-dark bg-dark" color="faded" light>
           <Link to="/" className="navbar-brand mr-auto">Travel Planner</Link>
-          <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+          <NavbarToggler onClick={this.toggleNavbar} className="" />
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
               <NavItem>

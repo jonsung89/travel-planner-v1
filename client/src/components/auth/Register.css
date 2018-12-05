@@ -1,0 +1,9 @@
+.register {
+  display: grid;
+  position: relative;
+  height: 88vh;
+}
+
+.register-container {
+  margin: auto 0;
+}

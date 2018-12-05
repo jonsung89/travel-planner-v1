@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { loginUser } from '../../actions/authActions';
 import TextFieldGroup from '../common/TextFieldGroup';
 
+import './Login.css';
+
 class Login extends Component {
   constructor() {
     super();
@@ -52,8 +54,9 @@ class Login extends Component {
   render() {
     const { errors } = this.state;
 
-    return <div className="login">
-        <div className="container">
+    return (
+      <div className="login">
+        <div className="login-container">
           <Link to="/" className="btn btn-secondary mb-3">
             Go Back
           </Link>
@@ -73,7 +76,8 @@ class Login extends Component {
             </div>
           </div>
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 

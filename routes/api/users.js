@@ -31,7 +31,7 @@ router.post('/register', (req, res) => {
 
   User.findOne({ username: req.body.username }) // look for a username that matches
     .then(user => {
-      if(user) {
+      if (user) {
         errors.username = 'Username already exists';
         return res.status(400).json(errors);
       } else {
@@ -43,9 +43,10 @@ router.post('/register', (req, res) => {
 
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newUser.password, salt, (err, hash) => {
-            if(err) throw err;
+            if (err) throw err;
             newUser.password = hash;
-            newUser.save()
+            newUser
+              .save()
               .then(user => res.json(user))
               .catch(err => console.error(err));
           });
@@ -69,49 +70,59 @@ router.post('/login', (req, res) => {
   const password = req.body.password;
 
   // Find user by email
-  User.findOne({ username })
-    .then(user => {
-      // Check for user
-      if(!user) {
-        errors.username = 'Username not found';
-        return res.status(404).json(errors);
-      }
+  User.findOne({ username }).then(user => {
+    // Check for user
+    if (!user) {
+      errors.username = 'Username not found';
+      return res.status(404).json(errors);
+    }
 
-      // Check Password
-      bcrypt.compare(password, user.password)
-        .then(isMatch => {
-          if(isMatch) {
-          // User Matched
-          // res.json({ msg: 'Success' });
-          
-            const payload = { id: user.id, username: user.username, email: user.email }; // Create JWT Payload
+    // Check Password
+    bcrypt.compare(password, user.password).then(isMatch => {
+      if (isMatch) {
+        // User Matched
+        // res.json({ msg: 'Success' });
 
-            // Sign Token
-            jwt.sign(payload, keys.secretOrKey, { expiresIn: '1d' }, (err, token) => {
-              res.json({
-                success: true,
-                token: 'Bearer ' + token
-              });
-            }); // One hour expiration
-          } else {
-            errors.password = 'Password incorrect';
-            return res.status(400).json(errors);
+        const payload = {
+          id: user.id,
+          username: user.username,
+          email: user.email
+        }; // Create JWT Payload
+
+        // Sign Token
+        jwt.sign(
+          payload,
+          keys.secretOrKey,
+          { expiresIn: '1d' },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: 'Bearer ' + token
+            });
           }
-        });
+        ); // One hour expiration
+      } else {
+        errors.password = 'Password incorrect';
+        return res.status(400).json(errors);
+      }
     });
+  });
 });
 
 // @route   GET api/users/current
 // @desc    Return current user - test purpose
 // @access  Private
-router.get('/current', passport.authenticate('jwt', { session: false }), (req, res) => {
-  res.json({ 
-    msg: 'Success',
-    id: req.user.id,
-    username: req.user.username,
-    email: req.user.email
-  });
-
-});
+router.get(
+  '/current',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    res.json({
+      msg: 'Success',
+      id: req.user.id,
+      username: req.user.username,
+      email: req.user.email
+    });
+  }
+);
 
 module.exports = router;

@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { registerUser } from '../../actions/authActions'
 import TextFieldGroup from '../common/TextFieldGroup';
 
+import './Register.css';
+
 class Register extends Component {
   constructor() {
     super();
@@ -50,11 +52,10 @@ class Register extends Component {
   render() {
     const { errors } = this.state;
 
-    // const { user } = this.props.auth;
-
-    return <div className="register">
+    return (
+      <div className="register">
         {/* {user ? user.username : null} */}
-        <div className="container">
+        <div className="register-container">
           <Link to="/" className="btn btn-secondary mb-3">
             Go Back
           </Link>
@@ -79,7 +80,8 @@ class Register extends Component {
             </div>
           </div>
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 
