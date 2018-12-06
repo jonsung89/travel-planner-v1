@@ -22,6 +22,29 @@ This app allows users to plan their travels by recommending sights to see and bi
 
 The app also provides a budget tracker that will allow users to set a budget for the whole trip and for customizable categories such as food, accommodations, entertainment, and shopping. 
 
-### Todo
+## Tech Used
+
+### Front-End
+* React
+* Redux
+* JavaScript
+* HTML5
+* CSS3
+
+### Back-End
+* Node.js
+* Express.js
+* Mongoose
+* mLab
+* Passport
+* Bcryptjs
+* JWT
+
+### Deployment
+* Github
+* Heroku
+* mlab
+
+## Todo
 * Sort the plans by the date
 * Add the add-activity functionality to each destination
