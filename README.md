@@ -30,6 +30,7 @@ The app also provides a budget tracker that will allow users to set a budget for
 * JavaScript
 * HTML5
 * CSS3
+* Axios
 
 ### Back-End
 * Node.js
