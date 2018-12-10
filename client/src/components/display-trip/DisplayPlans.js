@@ -31,10 +31,11 @@ class DisplayPlans extends Component {
         // location: item.location
         return (
           <div className="col-md-6 mb-6" key={item._id}>
+            <br />
             <div className="card border-dark mb-4">
               <div className="card-header text-white bg-dark">
-                <Moment format="MM/DD/YYYY">{item.dateTo}</Moment> - <Moment format="MM/DD/YYYY">
-                  {item.dateFrom}
+                <Moment format="MM/DD/YYYY">{item.dateFrom}</Moment> - <Moment format="MM/DD/YYYY">
+                  {item.dateTo}
                 </Moment>
               </div>
               <div className="card-body text-dark">
@@ -52,6 +53,7 @@ class DisplayPlans extends Component {
       console.log('this is the list of destinations: ', dests);
       // console.log('this is the list of all the locations: ', dest);
 
+      
       displayPlansHeader = <div className="display-content">
           <h2 className="display-4 text-center m-5">
             Plans for {trip[specificTrip].handle}

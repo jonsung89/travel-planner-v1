@@ -17,3 +17,7 @@
   background: rgb(255, 0, 0);
   color: #fff;
 }
+
+.card-body {
+  background-color: rgb(234, 250, 239);
+}
