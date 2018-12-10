@@ -8,7 +8,7 @@
 
 </p>
 
-<h2 align="center"><img width=100% src="/client/src/img/landing-page.png" alt="Travel Planner"></h2>
+<h2 align="center"><img width=75% src="/client/src/img/landing-page.png" alt="Travel Planner"></h2>
 
 <p align="left">
   <strong>
