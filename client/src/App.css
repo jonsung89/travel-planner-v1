@@ -40,6 +40,10 @@ img {
   background-color: #34495E;
 }
 
+.btn-dark {
+  background-color: rgb(80, 89, 99);
+}
+
 .btn-dark:hover {
-  background-color: rgb(69, 77, 85);
+  background-color: rgb(41, 46, 51);
 }

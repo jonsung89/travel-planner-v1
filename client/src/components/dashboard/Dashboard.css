@@ -11,13 +11,16 @@
   color: #000;
   left: 50;
   float: right;
+  border-radius: 50%;
 }
 
 .btn-delete:hover {
-  background: rgb(255, 0, 0);
+  background: rgb(202, 0, 0);
   color: #fff;
+  border-radius: 50%;
+  transition: 0.5s;
 }
 
 .card-body {
-  background-color: rgb(234, 250, 239);
+  background-color: rgb(255, 255, 255);
 }
