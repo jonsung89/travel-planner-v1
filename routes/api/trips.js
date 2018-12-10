@@ -234,6 +234,30 @@ router.delete('/destination/:id/:destId', passport.authenticate('jwt', { session
 
 
 
+// @route   DELETE api/trips/:id
+// @desc    Delete targeted trips
+// @access  Private
+router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  
+  const { id } = req.params;
+  // const userId = req.user.id;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    const err = new Error('The `id` is not valid');
+    err.status = 400;
+    return next(err);
+  }
+
+  Trip.findOneAndDelete({ _id: id })
+    .then(() => res.json({ success: true }))
+    .catch(err => res.status(404).json(err));
+});
+
+
+
+
+
+
 // @route   DELETE api/trips
 // @desc    Delete user and all trips
 // @access  Private

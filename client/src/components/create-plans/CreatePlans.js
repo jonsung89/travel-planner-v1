@@ -139,7 +139,7 @@ class CreatePlans extends Component {
                   </div>
 
                 <div className="mb-3">
-                  <input type="submit" value="submit" className="btn btn-info btn-block mt-4" />
+                  <input type="submit" value="Submit" className="btn btn-info btn-block mt-4" />
                 </div>
               </form>
             </div>

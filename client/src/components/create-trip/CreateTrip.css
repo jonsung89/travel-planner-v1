@@ -1,0 +1,8 @@
+.create-trip {
+  display: grid;
+  height: 88vh;
+}
+
+.create-trip .container {
+  margin: auto;
+}

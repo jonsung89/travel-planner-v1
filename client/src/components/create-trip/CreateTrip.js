@@ -8,6 +8,8 @@ import TextFieldGroup from '../common/TextFieldGroup';
 // import InputGroup from "../common/InputGroup";
 import { createTrip } from '../../actions/tripActions'
 
+import './CreateTrip.css';
+
 class CreateTrip extends Component {
   constructor(props) {
     super(props);
@@ -43,7 +45,8 @@ class CreateTrip extends Component {
   render() {
     const { errors } = this.state;
 
-    return <div className="create-trip">
+    return (
+      <div className="create-trip">
         <div className="container">
           <Link to="/dashboard" className="btn btn-secondary mb-3">
             Go Back
@@ -59,13 +62,14 @@ class CreateTrip extends Component {
               <label htmlFor="input-trip-name">Trip Name</label>
                 <TextFieldGroup placeholder="* Trip Name" name="handle" value={this.state.handle} onChange={this.onChange} error={errors.handle} info="A unique name of your trip." />
                 <div className="mb-3">
-                  <input type="submit" value="submit" className="btn btn-info btn-block mt-4" />
+                  <input type="submit" value="Submit" className="btn btn-info btn-block mt-4" />
                 </div>
               </form>
             </div>
           </div>
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 

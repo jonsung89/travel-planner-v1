@@ -1,0 +1,9 @@
+.display-plans {
+  display: grid;
+  height: 88vh;
+}
+
+.col-md-6.mb-6 {
+  padding: auto;
+  margin: auto;
+}

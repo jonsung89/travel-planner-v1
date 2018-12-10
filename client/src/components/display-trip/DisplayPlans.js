@@ -5,6 +5,8 @@ import { withRouter, Redirect, Link } from 'react-router-dom'; // for when we ne
 import Moment from 'react-moment';
 import { getSelectedTrip } from "../../actions/tripActions";
 
+import './DisplayPlans.css';
+
 class DisplayPlans extends Component {
   componentDidMount() {
     this.props.getSelectedTrip();
@@ -27,7 +29,8 @@ class DisplayPlans extends Component {
       const dests = trip[specificTrip].destination;
       const displayLocations = dests.map(item => {
         // location: item.location
-        return <div className="col-md-6 mb-6" key={item._id}>
+        return (
+          <div className="col-md-6 mb-6" key={item._id}>
             <div className="card border-dark mb-4">
               <div className="card-header text-white bg-dark">
                 <Moment format="MM/DD/YYYY">{item.dateTo}</Moment> - <Moment format="MM/DD/YYYY">
@@ -42,14 +45,15 @@ class DisplayPlans extends Component {
                 </button>
               </div>
             </div>
-          </div>;
+          </div>
+        );
       })
       
       console.log('this is the list of destinations: ', dests);
       // console.log('this is the list of all the locations: ', dest);
 
       displayPlansHeader = <div className="display-content">
-          <h2 className="display-4 text-center mb-4">
+          <h2 className="display-4 text-center m-5">
             Plans for {trip[specificTrip].handle}
           </h2>
             {displayLocations}
@@ -57,17 +61,18 @@ class DisplayPlans extends Component {
     }
     
 
-    return <div className="display-plans">
-        <div className="container">
+    return (
+      <div className="display-plans">
+        <div className="container m-4">
           <Link to="/dashboard" className="btn btn-secondary mb-3">Go Back</Link>
           <div className="row">
             <div className="col-md-12">
               {displayPlansHeader}          
             </div>
-
           </div>
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 
