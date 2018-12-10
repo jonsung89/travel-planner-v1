@@ -37,7 +37,7 @@ class CreatePlans extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log('Submitted');
+    // console.log('Submitted');
     const destData = {
       location: this.state.location,
       dateFrom: this.state.dateFrom,
@@ -67,7 +67,7 @@ class CreatePlans extends Component {
       return <Redirect to='/dashboard' />;
     } else {
       const tripId = this.props.match.params.tripHandle;
-      console.log("this is the _id of this trip: ", tripId);
+      // console.log("this is the _id of this trip: ", tripId);
 
       // const specificTrip = trip.filter(item => { return item._id === tripId });
 
