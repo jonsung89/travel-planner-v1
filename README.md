@@ -53,5 +53,5 @@ The app also provides a budget tracker that will allow users to set a budget for
 * mlab
 
 ## Todo
-* Sort the plans by the date
+* Add budgeting tool
 * Add the add-activity functionality to each destination
