@@ -133,16 +133,17 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 
   Trip.findOne({ handle: tripFields.handle })
     .then(trip => {
-      if (trip) {
-        errors.handle = 'Handle already exists';
-        return res.status(400).json(errors);
-      } else {
+      // if (trip) {
+      //   errors.handle = 'Please come up with a different unique name for your trip';
+      //   return res.status(400).json(errors);
+      // } else {
         new Trip(tripFields).save()
           .then(trip => {
             res.json(trip);
           });
       }
-    });
+    // }
+    );
 });
 
 
