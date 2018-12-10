@@ -259,6 +259,8 @@ router.delete('/:id', passport.authenticate('jwt', { session: false }), (req, re
 
 
 
+
+
 // @route   DELETE api/trips
 // @desc    Delete user and all trips
 // @access  Private

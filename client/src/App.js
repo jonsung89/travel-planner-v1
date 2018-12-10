@@ -11,7 +11,7 @@ import store from './store';
 import PrivateRoute from './components/common/PrivateRoute';
 
 import NavBar from './components/layout/Navbar';
-import Footer from './components/layout/Footer';
+// import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
@@ -61,10 +61,10 @@ class App extends Component {
                 <PrivateRoute exact path="/create-trip" component={ CreateTrip } />
               </Switch>
               <Switch>
-                <PrivateRoute exact path="/create-plans/:tripHandle" component={CreatePlans} />
+                <PrivateRoute exact path="/create-plans/:tripHandle" component={ CreatePlans } />
               </Switch>
               <Switch>
-                <PrivateRoute exact path="/display-plans/:tripHandle" component={DisplayPlans} />
+                <PrivateRoute exact path="/display-plans/:tripHandle" component={ DisplayPlans } />
               </Switch>
             </div>
           </div>

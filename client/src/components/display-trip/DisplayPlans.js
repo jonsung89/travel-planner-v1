@@ -50,9 +50,7 @@ class DisplayPlans extends Component {
         );
       })
       
-      console.log('this is the list of destinations: ', dests);
-      // console.log('this is the list of all the locations: ', dest);
-
+      // console.log('this is the list of destinations: ', dests);
       
       displayPlansHeader = <div className="display-content">
           <h2 className="display-4 text-center m-5">

@@ -14,7 +14,7 @@ class Dashboard extends Component {
 
   handleDeleteTrip(e, tripId) {
     e.preventDefault();
-    console.log('`deleteTrip` submitted for', tripId);
+    // console.log('`deleteTrip` submitted for', tripId);
     this.props.deleteTrip(tripId, this.props.history);
     this.props.getCurrentTrip();
   }
