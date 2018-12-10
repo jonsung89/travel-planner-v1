@@ -3,7 +3,7 @@ Functionality of a travel diary with the added practicality of a budget tracker.
 
 ![React](https://img.shields.io/badge/react-16.6.0%2B-blue.svg) [![npm version](https://img.shields.io/badge/npm%20package-6.4.1-orange.svg)](https://badge.fury.io/js/npm) ![Dependencies](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg) [![Live Demo](https://img.shields.io/badge/demo-online-green.svg)](https://guarded-lowlands-63388.herokuapp.com/)
 
-<h1 align="center"><img width=30% src=".client/src/img/landing-page.png" alt="Travel Planner"></h1>
+<h1 align="center"><img width=30% src="travel-planner-v1/client/src/img/landing-page.png" alt="Travel Planner"></h1>
 
 <p align="left">
   <strong>
