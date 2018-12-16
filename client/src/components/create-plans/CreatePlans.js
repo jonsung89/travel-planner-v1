@@ -85,7 +85,10 @@ class CreatePlans extends Component {
       );
     }
 
-    return <div className="create-trip">
+    let today = new Date().toISOString().split("T")[0];
+
+    return (
+      <div className="create-trip">
         <div className="container">
           <Link to ="/dashboard" className="btn btn-secondary mb-3">Go Back</Link>
           <div className="row">
@@ -106,6 +109,7 @@ class CreatePlans extends Component {
                     placeholder="* mm/dd/yyyy"
                     type="date"
                     name="dateFrom"
+                    min={today}
                     value={this.state.dateFrom}
                     onChange={this.onChange}
                     error={errors.dateFrom}
@@ -145,7 +149,8 @@ class CreatePlans extends Component {
             </div>
           </div>
         </div>
-      </div>;
+      </div>
+    );
   }
 }
 
