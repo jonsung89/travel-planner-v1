@@ -47,9 +47,9 @@ class NavBar extends Component {
           <NavbarToggler onClick={this.toggleNavbar} className="" />
           <Collapse isOpen={!this.state.collapsed} navbar>
             <Nav navbar>
-              <NavItem>
+              {/* <NavItem>
                 <NavLink href="/about" target="_blank">About</NavLink>
-              </NavItem>
+              </NavItem> */}
               <NavItem>
                 <NavLink href="https://github.com/jonsung89/travel-planner-v1/tree/master" target="_blank">GitHub Repo</NavLink>
               </NavItem>
